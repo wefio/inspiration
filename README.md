@@ -1,1 +1,57 @@
-# inspiration
+# 突发奇想
+
+# c语言
+## 水仙花数
+```bash
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    // 预先计算0到9的n次幂
+    long long powers[10];
+    for (int i = 0; i < 10; i++) {
+        powers[i] = (long long)pow(i, n);
+    }
+
+    // 计算n位数的起始值和结束值
+    long long start = 1;
+    for (int i = 1; i < n; i++) {
+        start *= 10;
+    }
+
+    for (long long num = start; num < start * 10; num++) {
+        long long t = num;
+        long long sum = 0;
+
+        while (t > 0) {
+            int digit = t % 10;
+            sum += powers[digit];
+            t /= 10;
+        }
+
+        if (sum == num) {
+            printf("%lld\n", num);
+        }
+    }
+
+    return 0;
+}
+```
+程序来源于：https://www.bilibili.com/video/BV1dr4y1n7vA?p=48
+但是n=9的时候计算大概要100秒，于是与ai进行交流，寻找更快的方法。
+
+ai说，这里为您推荐两种不同的算法来查找指定范围内的所有水仙花数：
+直接枚举法：
+此方法适合于寻找特定范围内所有的水仙花数。通过遍历这个范围内的每一个数，计算每个数是否满足水仙花数的条件。
+实现步骤包括：确定要检查的数字范围，对于每个数字，分离出每一位数字，并计算这些数字的n次幂之和，最后判断该和是否等于原数字。
+优化搜索法：
+考虑到水仙花数的特性，我们可以做一些优化来减少不必要的计算。例如，预先计算0-9这十个数字的立方值（或相应次幂），在后续计算中直接使用这些预计算的结果，可以加快计算速度。
+另一种优化策略是基于对称性或其他数学性质缩小搜索空间。例如，如果已经知道某些模式不可能形成水仙花数，则可以直接跳过这些情况。
+
+于是想到了n次幂也许可以只算一遍
+然后运行速度达到了26秒左右
+因为int只能算到9，询问ai后，ai把int改成了long long，然后速度到了17秒左右
+查了几个网页，觉得有可能是64位电脑运行64位的long long比32位的快
