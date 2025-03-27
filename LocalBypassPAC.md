@@ -2,8 +2,9 @@
 [返回](https://github.com/wefio/inspiration/blob/main/README.md)
 ```bash
 function FindProxyForURL(u,h){if(!this.__){const o='(25[0-5]|2[0-4]\\d|1\\d{2}|[1-9]\\d|\\d)';this.__={c:[
+  // 合并检测规则（保留域名连字符）
   /^localhost$/i,
-  /^[a-z0-9-]+\.local$/i,
+  /^[a-z0-9-]+\.local$/i,       // 新增内网域名检测
   new RegExp(`^127\\.${o}\\.${o}\\.${o}$`,'i'),
   new RegExp(`^10\\.${o}\\.${o}\\.${o}$`,'i'),
   new RegExp(`^172\\.(1[6-9]|2\\d|3[0-1])\\.${o}\\.${o}$`,'i'),
@@ -12,7 +13,8 @@ function FindProxyForURL(u,h){if(!this.__){const o='(25[0-5]|2[0-4]\\d|1\\d{2}|[
 ],p:"PROXY 127.0.0.1:%mixed-port%; SOCKS5 127.0.0.1:%mixed-port%; DIRECT;"};}
 
 const c=((h)=>{try{
-  let v=h.toLowerCase().replace(/[^\da-f:.-]/g,''); 
+  // 安全预处理（保留连字符和域名）
+  let v=h.toLowerCase().replace(/[^\da-f:.-]/g,''); // 允许连字符
   return v.startsWith('[')?v.slice(1,v.indexOf(']')):v.split(/[:%]/)[0];
 }catch{return h&&h.toLowerCase().replace(/[^\w.:-]/g,'')||''}})(h);
 
