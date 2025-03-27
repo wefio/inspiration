@@ -1,4 +1,5 @@
 # LocalBypassPAC
+[返回](https://github.com/wefio/inspiration/blob/main/README.md)
 ```bash
 function FindProxyForURL(u,h){if(!this.__){const o='(25[0-5]|2[0-4]\\d|1\\d{2}|[1-9]\\d|\\d)';this.__={c:[
   /^localhost$/i,
