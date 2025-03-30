@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>性格与思维适配工作类型分析</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #3498db;
+        }
+        .intro {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            display: none;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            display: none;
+        }
+        .question.active {
+            display: block;
+        }
+        .options {
+            margin-top: 10px;
+        }
+        .option {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .option:hover {
+            background-color: #dee2e6;
+        }
+        .option.selected {
+            background-color: #3498db;
+            color: white;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        button:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        .result-section {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        .result-title {
+            text-align: center;
+            color: #27ae60;
+            margin-bottom: 20px;
+        }
+        .analysis {
+            margin-top: 20px;
+        }
+        .analysis-section {
+            margin-bottom: 20px;
+        }
+        .examples {
+            margin-top: 20px;
+        }
+        .tag {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .product-tag {
+            background-color: #e3f2fd;
+            color: #1565c0;
+        }
+        .project-tag {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        .both-tag {
+            background-color: #fff3e0;
+            color: #e65100;
+        }
+        .progress-container {
+            width: 100%;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .progress-bar {
+            height: 10px;
+            background-color: #3498db;
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.5s;
+        }
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .person-card {
+            display: flex;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+        .person-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        .person-info {
+            flex: 1;
+        }
+        .term-explanation {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+            padding: 5px;
+            background-color: #f0f0f0;
+            border-radius: 3px;
+        }
+        .start-btn {
+            display: block;
+            margin: 0 auto;
+            padding: 12px 30px;
+            font-size: 18px;
+        }
+        .type-explanation {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f0f7ff;
+            border-radius: 5px;
+        }
+        .ai-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 15px;
+            display: block;
+            border: 3px solid #3498db;
+        }
+        .avatar-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>性格与思维适配工作类型分析</h1>
+        
+        <div class="intro">
+            <h2>来测一测你更适合产品工作还是项目工作</h2>
+            <p>这是一个仅供娱乐的简单小测试，通过分析你的性格和思维特点，帮助你了解自己更适合产品工作还是项目工作。</p>
+            
+            <h3>产品工作与项目工作的区别</h3>
+            <p><strong>产品工作</strong>：关注产品的全生命周期，从市场调研、需求分析到产品设计、迭代优化，需要持续关注用户体验和商业价值。</p>
+            <p><strong>项目工作</strong>：有明确起止时间的临时性工作，关注目标达成、资源协调和交付成果，需要高效执行和团队协作。</p>
+            
+            <button class="start-btn" id="startBtn">开始测试</button>
+        </div>
+        
+        <div class="test-section" id="testSection">
+            <h2>测试内容</h2>
+            <p>测试将从以下方面评估你的适配性：遇到问题的反应、兴趣与习惯、面对不确定性的行为、与人协作的风格、成就感来源等。</p>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            
+            <div id="question1" class="question">
+                <h3>问题 1/10</h3>
+                <p>当你遇到一个复杂问题时，你通常会：</p>
+                <div class="options">
+                    <div class="option" data-value="product">深入分析问题本质，寻找根本解决方案</div>
+                    <div class="option" data-value="project">快速制定行动计划，分步骤解决问题</div>
+                    <div class="option" data-value="both">两者结合，先分析再行动</div>
+                </div>
+                <div class="term-explanation">
+                    <strong>说明：</strong>产品工作更注重根本解决方案，项目工作更注重行动计划和执行
+                </div>
+            </div>
+            
+            <div id="question2" class="question">
+                <h3>问题 2/10</h3>
+                <p>你更喜欢的工作方式是：</p>
+                <div class="options">
+                    <div class="option" data-value="product">专注于一个领域深入研究</div>
+                    <div class="option" data-value="project">处理多样化的任务和挑战</div>
+                    <div class="option" data-value="both">根据情况调整工作方式</div>
+                </div>
+                <div class="term-explanation">
+                    <strong>说明：</strong>产品工作需要深度，项目工作需要广度
+                </div>
+            </div>
+            
+            <div id="question3" class="question">
+                <h3>问题 3/10</h3>
+                <p>面对不确定性时，你倾向于：</p>
+                <div class="options">
+                    <div class="option" data-value="product">收集更多信息，减少不确定性</div>
+                    <div class="option" data-value="project">设定明确目标，边做边调整</div>
+                    <div class="option" data-value="both">平衡信息收集和行动</div>
+                </div>
+                <div class="term-explanation">
+                    <strong>说明：</strong>产品决策需要更多信息支持，项目执行需要快速行动
+                </div>
+            </div>
+            
+            <div id="question4" class="question">
+                <h3>问题 4/10</h3>
+                <p>在团队中，你通常扮演的角色是：</p>
+                <div class="options">
+                    <div class="option" data-value="product">创意提供者或策略制定者</div>
+                    <div class="option" data-value="project">协调者或执行者</div>
+                    <div class="option" data-value="both">根据团队需要调整角色</div>
+                </div>
+                <div class="term-explanation">
+                    <strong>说明：</strong>产品工作侧重策略和创意，项目工作侧重协调和执行
+                </div>
+            </div>
+            
+            <div id="question5" class="question">
+                <h3>问题 5/10</h3>
+                <p>你的成就感主要来自：</p>
+                <div class="options">
+                    <div class="option" data-value="product">创造有价值的事物或解决复杂问题</div>
+                    <div class="option" data-value="project">按时高质量完成任务或达成目标</div>
+                    <div class="option" data-value="both">两者都能带来成就感</div>
+                </div>
+                <div class="term-explanation">
+                    <strong>说明：</strong>产品成就感来自创造价值，项目成就感来自目标达成
+                </div>
+            </div>
+            
+            <div id="question6" class="question">
+                <h3>问题 6/10</h3>
+                <p>你更擅长：</p>
+                <div class="options">
+                    <div class="option" data-value="product">发现用户需求和市场机会</div>
+                    <div class="option" data-value="project">组织和协调资源完成任务</div>
+                    <div class="option" data-value="both">两者都有一定能力</div>
+                </div>
+                <div class="term-explanation">
+                    <strong>说明：</strong>产品需要需求洞察力，项目需要资源协调能力
+                </div>
+            </div>
+            
+            <div id="question7" class="question">
+                <h3>问题 7/10</h3>
+                <p>你更喜欢的工作节奏是：</p>
+                <div class="options">
+                    <div class="option" data-value="product">有弹性，可以深入思考</div>
+                    <div class="option" data-value="project">有明确期限和里程碑</div>
+                    <div class="option" data-value="both">根据项目阶段调整节奏</div>
+                </div>
+                <div class="term-explanation">
+                    <strong>说明：</strong>产品工作需要思考时间，项目工作需要明确节点
+                </div>
+            </div>
+            
+            <div id="question8" class="question">
+                <h3>问题 8/10</h3>
+                <p>当计划变更时，你通常会：</p>
+                <div class="options">
+                    <div class="option" data-value="product">重新评估整体方向和策略</div>
+                    <div class="option" data-value="project">快速调整执行方案</div>
+                    <div class="option" data-value="both">视变更程度决定应对方式</div>
+                </div>
+                <div class="term-explanation">
+                    <strong>说明：</strong>产品变更需要战略调整，项目变更需要执行调整
+                </div>
+            </div>
+            
+            <div id="question9" class="question">
+                <h3>问题 9/10</h3>
+                <p>你更关注：</p>
+                <div class="options">
+                    <div class="option" data-value="product">长期影响和可持续性</div>
+                    <div class="option" data-value="project">短期目标和即时结果</div>
+                    <div class="option" data-value="both">平衡长期和短期考虑</div>
+                </div>
+                <div class="term-explanation">
+                    <strong>说明：</strong>产品关注长期价值，项目关注短期交付
+                </div>
+            </div>
+            
+            <div id="question10" class="question">
+                <h3>问题 10/10</h3>
+                <p>你更倾向于哪种思维方式：</p>
+                <div class="options">
+                    <div class="option" data-value="product">发散思维，探索多种可能性</div>
+                    <div class="option" data-value="project">收敛思维，聚焦解决方案</div>
+                    <div class="option" data-value="both">根据情况切换思维方式</div>
+                </div>
+                <div class="term-explanation">
+                    <strong>说明：</strong>产品需要发散思维寻找机会，项目需要收敛思维解决问题
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button id="prevBtn" disabled>上一题</button>
+                <button id="nextBtn" style="display: none;">下一题</button>
+                <button id="submitBtn" style="display: none;">查看结果</button>
+            </div>
+        </div>
+        
+        <div class="result-section" id="resultSection">
+            <h2 class="result-title" id="resultTitle">你的测试结果</h2>
+            <div id="resultContent"></div>
+            
+            <div class="analysis" id="analysisContent"></div>
+            
+            <div class="examples" id="examplesContent"></div>
+            
+            <div class="suggestions" id="suggestionsContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // 测试数据
+        const questions = [
+            {
+                id: 1,
+                text: "当你遇到一个复杂问题时，你通常会：",
+                options: [
+                    { text: "深入分析问题本质，寻找根本解决方案", value: "product" },
+                    { text: "快速制定行动计划，分步骤解决问题", value: "project" },
+                    { text: "两者结合，先分析再行动", value: "both" }
+                ],
+                explanation: "产品工作更注重根本解决方案，项目工作更注重行动计划和执行"
+            },
+            {
+                id: 2,
+                text: "你更喜欢的工作方式是：",
+                options: [
+                    { text: "专注于一个领域深入研究", value: "product" },
+                    { text: "处理多样化的任务和挑战", value: "project" },
+                    { text: "根据情况调整工作方式", value: "both" }
+                ],
+                explanation: "产品工作需要深度，项目工作需要广度"
+            },
+            {
+                id: 3,
+                text: "面对不确定性时，你倾向于：",
+                options: [
+                    { text: "收集更多信息，减少不确定性", value: "product" },
+                    { text: "设定明确目标，边做边调整", value: "project" },
+                    { text: "平衡信息收集和行动", value: "both" }
+                ],
+                explanation: "产品决策需要更多信息支持，项目执行需要快速行动"
+            },
+            {
+                id: 4,
+                text: "在团队中，你通常扮演的角色是：",
+                options: [
+                    { text: "创意提供者或策略制定者", value: "product" },
+                    { text: "协调者或执行者", value: "project" },
+                    { text: "根据团队需要调整角色", value: "both" }
+                ],
+                explanation: "产品工作侧重策略和创意，项目工作侧重协调和执行"
+            },
+            {
+                id: 5,
+                text: "你的成就感主要来自：",
+                options: [
+                    { text: "创造有价值的事物或解决复杂问题", value: "product" },
+                    { text: "按时高质量完成任务或达成目标", value: "project" },
+                    { text: "两者都能带来成就感", value: "both" }
+                ],
+                explanation: "产品成就感来自创造价值，项目成就感来自目标达成"
+            },
+            {
+                id: 6,
+                text: "你更擅长：",
+                options: [
+                    { text: "发现用户需求和市场机会", value: "product" },
+                    { text: "组织和协调资源完成任务", value: "project" },
+                    { text: "两者都有一定能力", value: "both" }
+                ],
+                explanation: "产品需要需求洞察力，项目需要资源协调能力"
+            },
+            {
+                id: 7,
+                text: "你更喜欢的工作节奏是：",
+                options: [
+                    { text: "有弹性，可以深入思考", value: "product" },
+                    { text: "有明确期限和里程碑", value: "project" },
+                    { text: "根据项目阶段调整节奏", value: "both" }
+                ],
+                explanation: "产品工作需要思考时间，项目工作需要明确节点"
+            },
+            {
+                id: 8,
+                text: "当计划变更时，你通常会：",
+                options: [
+                    { text: "重新评估整体方向和策略", value: "product" },
+                    { text: "快速调整执行方案", value: "project" },
+                    { text: "视变更程度决定应对方式", value: "both" }
+                ],
+                explanation: "产品变更需要战略调整，项目变更需要执行调整"
+            },
+            {
+                id: 9,
+                text: "你更关注：",
+                options: [
+                    { text: "长期影响和可持续性", value: "product" },
+                    { text: "短期目标和即时结果", value: "project" },
+                    { text: "平衡长期和短期考虑", value: "both" }
+                ],
+                explanation: "产品关注长期价值，项目关注短期交付"
+            },
+            {
+                id: 10,
+                text: "你更倾向于哪种思维方式：",
+                options: [
+                    { text: "发散思维，探索多种可能性", value: "product" },
+                    { text: "收敛思维，聚焦解决方案", value: "project" },
+                    { text: "根据情况切换思维方式", value: "both" }
+                ],
+                explanation: "产品需要发散思维寻找机会，项目需要收敛思维解决问题"
+            }
+        ];
+
+        // 结果分析数据
+        const resultAnalysis = {
+            product: {
+                title: "你适合做产品工作 (PRODUCT)",
+                tag: "P型人 (Product Person)",
+                description: "你的性格和思维特点表明你非常适合产品方向的工作。",
+                strengths: {
+                    personality: [
+                        "善于发现和解决问题",
+                        "有创造力和前瞻性",
+                        "对用户体验敏感",
+                        "能够长期专注于一个领域"
+                    ],
+                    thinking: [
+                        "系统化思维能力强",
+                        "善于分析用户需求",
+                        "能够平衡商业和技术考量",
+                        "注重细节和整体体验"
+                    ]
+                },
+                suggestions: [
+                    "尝试深入了解产品生命周期",
+                    "培养数据分析和用户研究能力",
+                    "关注行业趋势和竞品分析",
+                    "练习将复杂需求转化为简单解决方案"
+                ],
+                examples: [
+                    {
+                        name: "张小龙",
+                        role: "微信创始人",
+                        description: "创造了中国最成功的社交产品微信",
+                        img: "张小龙.jpg"
+                    },
+                    {
+                        name: "俞军",
+                        role: "百度产品副总裁",
+                        description: "百度搜索产品的奠基人",
+                        img: "俞军.jpg"
+                    },
+                    {
+                        name: "乔布斯",
+                        role: "苹果公司联合创始人",
+                        description: "创造了iPhone等革命性产品",
+                        img: "乔布斯.jpg"
+                    }
+                ],
+                avatar: "P.png",
+                typeExplanation: "P型人(Product Person)是产品型人才，擅长从用户需求出发，创造有价值的产品解决方案。"
+            },
+            project: {
+                title: "你适合做项目工作 (PROJECT)",
+                tag: "J型人 (Project Person)",
+                description: "你的性格和思维特点表明你非常适合项目方向的工作。",
+                strengths: {
+                    personality: [
+                        "执行力强",
+                        "善于协调资源",
+                        "能够在压力下工作",
+                        "注重结果导向"
+                    ],
+                    thinking: [
+                        "结构化思维能力强",
+                        "善于制定计划和流程",
+                        "能够平衡时间、成本和质量",
+                        "注重实际效果和交付"
+                    ]
+                },
+                suggestions: [
+                    "学习项目管理方法论如PMP",
+                    "培养风险管理和应急能力",
+                    "练习跨部门沟通协调",
+                    "关注资源优化和效率提升"
+                ],
+                examples: [
+                    {
+                        name: "任正非",
+                        role: "华为创始人",
+                        description: "带领华为完成众多大型通信项目",
+                        img: "任正非.jpg"
+                    },
+                    {
+                        name: "马云",
+                        role: "阿里巴巴创始人",
+                        description: "成功实施阿里巴巴生态系统建设项目",
+                        img: "马云.png"
+                    },
+                    {
+                        name: "埃隆·马斯克",
+                        role: "特斯拉CEO",
+                        description: "管理多个高科技项目并行",
+                        img: "埃隆·马斯克.jpg"
+                    }
+                ],
+                avatar: "J.png",
+                typeExplanation: "J型人(Project Person)是项目型人才，擅长组织和协调资源，高效达成项目目标。"
+            },
+            both: {
+                title: "你既适合做产品也适合做项目 (PRODUCT & PROJECT)",
+                tag: "B型人 (Balanced Person)",
+                description: "你的性格和思维特点表明你在产品方向和项目方向都有发展潜力。",
+                strengths: {
+                    personality: [
+                        "适应性强",
+                        "平衡创造力和执行力",
+                        "能够切换不同工作模式",
+                        "既关注细节又把握全局"
+                    ],
+                    thinking: [
+                        "灵活运用不同思维方式",
+                        "能够连接战略和执行",
+                        "平衡长期和短期目标",
+                        "整合不同领域的知识"
+                    ]
+                },
+                suggestions: [
+                    "尝试在不同角色间轮岗体验",
+                    "培养产品思维和项目管理的双重能力",
+                    "关注从创意到落地的全过程",
+                    "寻找需要跨界能力的岗位"
+                ],
+                examples: [
+                    {
+                        name: "雷军",
+                        role: "小米创始人",
+                        description: "既负责产品设计又领导公司运营",
+                        img: "雷军.png"
+                    },
+                    {
+                        name: "周鸿祎",
+                        role: "360公司创始人",
+                        description: "产品经理出身的CEO",
+                        img: "周鸿祎.jpg"
+                    },
+                    {
+                        name: "杰夫·贝索斯",
+                        role: "亚马逊创始人",
+                        description: "将产品愿景与大规模执行结合",
+                        img: "杰夫·贝索斯.jpg"
+                    }
+                ],
+                avatar: "B.png",
+                typeExplanation: "B型人(Balanced Person)是复合型人才，能够平衡产品思维和项目执行能力。"
+            }
+        };
+
+        // 当前问题索引
+        let currentQuestion = 0;
+        const totalQuestions = questions.length;
+        const answers = [];
+
+        // DOM元素
+        const startBtn = document.getElementById('startBtn');
+        const testSection = document.getElementById('testSection');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const progressBar = document.getElementById('progressBar');
+        const resultSection = document.getElementById('resultSection');
+        const resultTitle = document.getElementById('resultTitle');
+        const resultContent = document.getElementById('resultContent');
+        const analysisContent = document.getElementById('analysisContent');
+        const examplesContent = document.getElementById('examplesContent');
+        const suggestionsContent = document.getElementById('suggestionsContent');
+
+        // 开始测试
+        startBtn.addEventListener('click', function() {
+            document.querySelector('.intro').style.display = 'none';
+            testSection.style.display = 'block';
+            showQuestion(0);
+        });
+
+        // 初始化问题
+        function showQuestion(index) {
+            // 隐藏所有问题
+            document.querySelectorAll('.question').forEach(q => {
+                q.classList.remove('active');
+            });
+            
+            // 显示当前问题
+            document.getElementById(`question${index + 1}`).classList.add('active');
+            
+            // 更新进度条
+            progressBar.style.width = `${(index + 1) / totalQuestions * 100}%`;
+            
+            // 更新按钮状态
+            prevBtn.disabled = index === 0;
+            
+            if (index === totalQuestions - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'block';
+            } else {
+                nextBtn.style.display = 'block';
+                submitBtn.style.display = 'none';
+            }
+        }
+
+        // 选择答案
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('option')) {
+                // 移除同问题的其他选中状态
+                const options = e.target.parentElement.querySelectorAll('.option');
+                options.forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // 设置当前选中
+                e.target.classList.add('selected');
+                
+                // 保存答案
+                answers[currentQuestion] = e.target.getAttribute('data-value');
+                
+                // 自动进入下一题（如果不是最后一题）
+                if (currentQuestion < totalQuestions - 1) {
+                    setTimeout(() => {
+                        currentQuestion++;
+                        showQuestion(currentQuestion);
+                    }, 500);
+                }
+            }
+        });
+
+        // 上一题
+        prevBtn.addEventListener('click', function() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        });
+
+        // 下一题
+        nextBtn.addEventListener('click', function() {
+            if (answers[currentQuestion]) {
+                if (currentQuestion < totalQuestions - 1) {
+                    currentQuestion++;
+                    showQuestion(currentQuestion);
+                }
+            } else {
+                alert('请选择一个答案');
+            }
+        });
+
+        // 提交测试
+        submitBtn.addEventListener('click', function() {
+            if (answers[currentQuestion]) {
+                calculateResult();
+            } else {
+                alert('请选择一个答案');
+            }
+        });
+
+        // 计算结果
+        function calculateResult() {
+            // 统计答案
+            const counts = { product: 0, project: 0, both: 0 };
+            answers.forEach(answer => {
+                counts[answer]++;
+            });
+            
+            // 确定结果类型
+            let resultType;
+            if (counts.product > counts.project && counts.product > counts.both) {
+                resultType = 'product';
+            } else if (counts.project > counts.product && counts.project > counts.both) {
+                resultType = 'project';
+            } else {
+                resultType = 'both';
+            }
+            
+            // 显示结果
+            showResult(resultType);
+        }
+
+        // 显示结果
+        function showResult(resultType) {
+            const result = resultAnalysis[resultType];
+            
+            // 显示结果区域
+            resultSection.style.display = 'block';
+            
+            // 滚动到结果区域
+            resultSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // 设置结果标题
+            resultTitle.textContent = result.title;
+            
+            // 设置结果内容
+            resultContent.innerHTML = `
+                <div class="avatar-container">
+                    <img src="${result.avatar}" alt="${result.tag}" class="ai-avatar" onerror="this.src='_'">
+                    <p>你的标签是: <span class="tag ${resultType}-tag">${result.tag}</span></p>
+                </div>
+                <div class="type-explanation">
+                    <p>${result.typeExplanation}</p>
+                </div>
+                <p>${result.description}</p>
+            `;
+            
+            // 设置分析内容
+            analysisContent.innerHTML = `
+                <div class="analysis-section">
+                    <h3>你的优势</h3>
+                    <h4>性格方面：</h4>
+                    <ul>
+                        ${result.strengths.personality.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                    
+                    <h4>思维方面：</h4>
+                    <ul>
+                        ${result.strengths.thinking.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                </div>
+                
+                <div class="analysis-section">
+                    <h3>发展建议</h3>
+                    <ul>
+                        ${result.suggestions.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            
+            // 设置示例人物
+            examplesContent.innerHTML = `
+                <h3>知名${resultType === 'both' ? '产品与项目复合型' : resultType === 'product' ? '产品' : '项目'}人才示例</h3>
+                ${result.examples.map(person => `
+                    <div class="person-card">
+                        <img src="${person.img}" alt="${person.name}" class="person-img" onerror="this.src='_'">
+                        <div class="person-info">
+                            <strong>${person.name}</strong> - ${person.role}<br>
+                            <small>${person.description}</small>
+                        </div>
+                    </div>
+                `).join('')}
+            `;
+            
+            // 如果是不确定的结果，添加额外建议
+            if (resultType === 'both') {
+                suggestionsContent.innerHTML = `
+                    <div class="analysis-section">
+                        <h3>不确定如何选择？</h3>
+                        <p>你可以尝试以下方法帮助决策：</p>
+                        <ul>
+                            <li>实习或兼职体验两种工作</li>
+                            <li>评估自己更享受哪种工作过程</li>
+                            <li>考虑当前职业发展阶段的需求</li>
+                            <li>咨询从业者的实际工作体验</li>
+                        </ul>
+                    </div>
+                `;
+            } else {
+                suggestionsContent.innerHTML = '';
+            }
+        }
+
+        // 初始显示介绍页面
+        document.getElementById('question1').classList.add('active');
+    </script>
+</body>
+</html>
