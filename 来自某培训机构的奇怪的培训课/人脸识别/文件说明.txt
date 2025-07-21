@@ -1,0 +1,16 @@
+文件说明：
+face_detect.py				# 人脸采集项目的程序代码
+
+face_recognizer.py			# 人脸识别项目的程序代码
+
+faces					# 用于保存识别出来的人脸
+
+haarcascade_frontalface_default.xml 	# 人脸特征模型
+
+meixi					# 梅西的几张照片，可以使用照片抓拍
+
+人脸识别项目实训练习
+
+练习一、参考老师的代码 face_detect.py 进行自己的人脸识别，可以多改几张人脸。完成可以提交代码和 faces目录。
+
+练习二、尝试修改代码通过读取 meixi 目录的方式，识别 meixi 的face。提交代码和face目录。
